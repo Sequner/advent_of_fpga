@@ -36,7 +36,8 @@ Go through each number in the range, and check if it is an invalid number. It ca
    **Cons:** poor throughput, undeterministic latency (the latency would depend on the size of the input range).
 <!-- -->
 
-    As a contrast, the implemented solution has moderate resource consumption, constant throughput, and deterministic latency.
+    As a contrast, the implemented solution has moderate resource consumption, constant throughput, 
+    and deterministic latency.
 
 ## Implemented Solution
 **Day 2b is basically a superset of Day 2a. Therefore, only the solution for Day 2b is shown in this submission.**
@@ -67,7 +68,8 @@ The total sum of arithmetic sequence is **(a_start + a_end) * n_elems / 2** = **
     Number 42424242 can be split into: factor 8 -> 4-2-4-2-4-2-4-2, factor 4 -> 42-42-42-42, and factor 2 -> 4242-4242.
     Number 42224222 can be split into: factor 8 -> 4-2-2-2-4-2-2-2, factor 4 -> 42-22-42-22, and factor 2 -> 4222-4444.
    
-    The observation: invalid numbers with split factor 2 are superset of the invalid numbers with split factors 4 and 8. 
+    Observation: invalid numbers with split factor 2 are superset of the invalid numbers 
+                 with split factors 4 and 8. 
 
 **Nuance #2.** In case there are several prime factors, there are overlapping numbers that have to be removed from the final sum.
 
@@ -77,13 +79,15 @@ The total sum of arithmetic sequence is **(a_start + a_end) * n_elems / 2** = **
     Number 232323 can be split into: factor 6 -> 2-3-2-3-2-3, factor 3 -> 23-23-23, factor 2 -> 232-323.
     Number 222222 can be split into: factor 6 -> 2-2-2-2-2-2, factor 3 -> 22-22-22, factor 2 -> 222-222.
 
-    The observation: Both, set of split factor 2 overlap and set of split factor 3, contains set of split factor 6.
+    Observation: Both, set of split factor 2 overlap and set of split factor 3, 
+                 contains set of split factor 6.
                      
 **Nuance #3.** When numbers in the input range have different number of digits, the sequence sum has to be calculated separately for each number of digits.
 
     Let's consider range [88-444]. The list of all invalid numbers is [88, 99, 111, 222, 333, 444].
 
-    By the definition of arithmetic sequence, the next number in the sequence after [88, 99] should be 110 (99+11), which is not true.
+    By the definition of arithmetic sequence, the next number in the sequence after [88, 99] 
+                                              should be 110 (99+11), which is not true.
 
     Hence, we have to calculate two sequence sums: for 2-digit numbers, and for 3-digit numbers.
 
@@ -97,12 +101,13 @@ The output register is reset, when a stream pauses even for 1 cycle.**
 **3. That being said, the sum might overflow in case the list of input ranges is too large.**
 
     Inputs: a 1-bit valid signal, and a 64-bit lower and an upper bound of the input range.
-    Outputs: a 1-bit output valid signal, and an accumulated 128-bit sum of all input ranges in the ongoing of valid ranges stream.
+    Outputs: a 1-bit output valid signal, 
+             an accumulated 128-bit sum of all input ranges in the ongoing of valid ranges stream.
 
 ### Input processing
-1. Input in converted from binary to BCD.**
+1. Input is converted from binary to BCD.
 
-2. BCD range is fed to 18 (from 2 to 20) sequence sum calculators to satisfy Nuance #3.**
+2. BCD range is fed to 18 (from 2 to 20) sequence sum calculators to satisfy Nuance #3.
 
 3. Inside the seq. sum calculators, the lower and upper bounds are clipped.
 
@@ -116,23 +121,25 @@ The output register is reset, when a stream pauses even for 1 cycle.**
 
 5. Each sequence boundary finders outputs binary values of first_elem, last_elem, n_elems_lower, n_elems_upper, exclude_first, and exclude_last.
 
-   first_elem and last_elem are first and last element of the sequence.
+   **first_elem and last_elem** are first and last element of the sequence.
 
    The first and last elements are found by extrapolating the most significant subnumber.
 
-   Let's consider, lower_bound is 121314 and prime factor of 3. Subnumbers are 12-13-14. 12 is extrapolated, so first_elem is 12-12-12. Same thing with last_elem.
+   Let's consider, **lower_bound is 121314** and **prime factor of 3**. Subnumbers are **12-13-14**. 12 is **extrapolated**, so first_elem is **12-12-12**.
 
-   Note: in this case, first_elem is out of range (121212 is lower than lower bound 121314), hence, we set exclude first.
+   We can do the same thing with last_elem.
 
-   exclude_first, exclude_last are flags set when extrapolated first/last_elem are out of range.
+   **Note:** in this case, **first_elem is out of range** (121212 is lower than lower bound 121314), hence, we set exclude first.
+
+   **exclude_first**, and **exclude_last** are flags set when **extrapolated first/last_elem are out of range**.
    
-   n_elems_lower and n_elems_upper are used to find total number of elements in the sequence n_elem = n_elems_upper - n_elems_lower.
+   **n_elems_lower and n_elems_upper** are used to find **total number of elements** in the sequence **n_elem = n_elems_upper - n_elems_lower + 1**.
 
-6. first_elem, last_elem, and n_elems are used to find the sequence sum. first_elem and/or last_elem are then subtracted from the sequence sum if exclude_first or exclude_last are set.
-7. Once sequence sums are calculated for base factor and prime factors, the base factor seq. sum is subtracted from the prime factors seq. sum to exclude overlaps mentioned in Nuance #2. 
-8. The resulting prime factor sequence sums and the base factor sequence sum are added using adder tree.
-9. Cross-factor sequence sum from each digit N is then added through cross-digit adder tree.
-10. The result of cross-digit adder tree is accumulated in the output register.
+7. **first_elem, last_elem, and n_elems** are used to find the sequence sum. **first_elem and/or last_elem** are then **subtracted** from the sequence sum if **exclude_first or exclude_last are set**.
+8. Once sequence sums are calculated for base factor and prime factors, the **base factor seq. sum** is **subtracted from all prime factors seq. sum** to exclude overlaps mentioned in **Nuance #2**. 
+9. The resulting prime factor sequence sums and the base factor sequence sum are added using **adder tree**.
+10. Cross-factor sequence sum from each digit N is then added through cross-digit adder tree.
+11. The result of cross-digit adder tree is accumulated in the output register.
     
 <img width="2242" height="1512" alt="image" src="https://github.com/user-attachments/assets/522c6032-c996-4f14-93cc-bdae1b43f363" />
 

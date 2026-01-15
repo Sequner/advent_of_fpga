@@ -34,8 +34,11 @@ async def test_basic_packet(dut):
     dut.i_lower_bin.value = 0
     while dut.o_valid != 1:
         await RisingEdge(dut.i_clk)
-#    while dut.o_valid == 1:
-#        res += int(dut.o_res_bin.value)
-#        await RisingEdge(dut.i_clk)
 
-    print("RESULT: " + str(int(dut.o_duplicate_sum_bin.value)))
+    res = 0
+    # wait for the last valid result
+    while dut.o_valid == 1:
+        res = int(dut.o_acc_sum_bin.value)
+        await RisingEdge(dut.i_clk)
+
+    print("RESULT: " + str(res))

@@ -8,7 +8,7 @@ module day2 (
     input [BIN_WIDTH-1:0] i_lower_bin,
     input i_last,
     output logic o_valid,
-    output logic [BIN_WIDTH*2-1:0] o_duplicate_sum_bin
+    output logic [BIN_WIDTH*2-1:0] o_acc_sum_bin
 );
 
 logic bcd_valid;
@@ -208,14 +208,14 @@ adder_tree #(
 always_ff @(posedge i_clk) begin : final_sum_accumulator
     if (i_reset) begin
         o_valid <= '0;
-        o_duplicate_sum_bin <= '0;
+        o_acc_sum_bin <= '0;
     end
     else begin
         o_valid <= cross_digit_sum_valid;
         if (cross_digit_sum_valid)
-            o_duplicate_sum_bin <= o_duplicate_sum_bin + cross_digit_sum;
+            o_acc_sum_bin <= o_acc_sum_bin + cross_digit_sum;
         else
-            o_duplicate_sum_bin <= '0;
+            o_acc_sum_bin <= '0;
     end
 end
 

@@ -147,7 +147,7 @@ The output register is reset, when a stream pauses even for 1 cycle.**
 <img width="2242" height="1512" alt="image" src="https://github.com/user-attachments/assets/522c6032-c996-4f14-93cc-bdae1b43f363" />
 
 ## Simulation
-The design was simulated using Cocotb & Verilator. The cocotb testbench is available in the repository.
+The top design **day2.sv** was simulated using Cocotb & Verilator. The cocotb testbench is available in the repository.
 ## Synthesis
 The module was synthesized on Vivado for Kintex-7 XC7K325T-FFG676-2. Timing constraints are met at 50 MHz. FPGA utilization is attached below.
 

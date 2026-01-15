@@ -13,7 +13,8 @@ Here, the number **11** is considered as **invalid**, since **1 = 1**.
 
 So, overall, in range **10-22**, there are 2 invalid numbers: **11 and 22**. The sum of 2 (and **the answer**) is **33**.
 ### Day 2a
-    For this puzzle, a given number had to be divided only on 2 subnumbers, for example, **100001 -> 100-001**.
+    For this puzzle, a given number had to be divided only on 2 subnumbers.
+    For example, 100001 -> 100-001.
 ### Day 2b
     For this puzzle, a given number had to be divided on any possible subnumbers. 
 

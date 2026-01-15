@@ -144,7 +144,7 @@ The output register is reset, when a stream pauses even for 1 cycle.**
 10. Cross-factor sequence sum from each digit N is then added through cross-digit adder tree.
 11. The result of cross-digit adder tree is accumulated in the output register.
     
-<img width="2242" height="1512" alt="image" src="https://github.com/user-attachments/assets/522c6032-c996-4f14-93cc-bdae1b43f363" />
+<img width="2318" height="1519" alt="image" src="https://github.com/user-attachments/assets/ca66a15e-6610-45c9-94c3-865289e13f6b" />
 
 ## Simulation
 The top design **day2.sv** was simulated using Cocotb & Verilator. The cocotb testbench is available in the repository.

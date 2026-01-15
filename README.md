@@ -64,9 +64,12 @@ The total sum of arithmetic sequence is **(a_start + a_end) * n_elems / 2** = **
 
     Let's consider 8-digit numbers. The split factors for 8-digit numbers are 2, 4, and 8.
 
-    Number 44444444 can be split into: factor 8 -> 4-4-4-4-4-4-4-4, factor 4 -> 44-44-44-44, and factor 2 -> 4444-4444.
-    Number 42424242 can be split into: factor 8 -> 4-2-4-2-4-2-4-2, factor 4 -> 42-42-42-42, and factor 2 -> 4242-4242.
-    Number 42224222 can be split into: factor 8 -> 4-2-2-2-4-2-2-2, factor 4 -> 42-22-42-22, and factor 2 -> 4222-4444.
+    Number 44444444 can be split into: factor 8 -> 4-4-4-4-4-4-4-4, factor 4 -> 44-44-44-44, 
+                                       factor 2 -> 4444-4444.
+    Number 42424242 can be split into: factor 8 -> 4-2-4-2-4-2-4-2, factor 4 -> 42-42-42-42, 
+                                       factor 2 -> 4242-4242.
+    Number 42224222 can be split into: factor 8 -> 4-2-2-2-4-2-2-2, factor 4 -> 42-22-42-22, 
+                                       factor 2 -> 4222-4444.
    
     Observation: invalid numbers with split factor 2 are superset of the invalid numbers 
                  with split factors 4 and 8. 
